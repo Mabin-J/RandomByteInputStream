@@ -83,6 +83,15 @@ public class RandomByteInputStream extends InputStream{
         init();
     }
 
+    @Override
+    public void close() throws RuntimeException {
+        try {
+            super.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void init(){
         if(useVisibleByte){
             readFunction = new AlphabetReadFunction();
@@ -100,7 +109,7 @@ public class RandomByteInputStream extends InputStream{
 
 
     @Override
-    public int read() throws IOException {
+    public int read() throws RuntimeException {
         ++readAmount;
         if(readAmount > size){
             return -1;
